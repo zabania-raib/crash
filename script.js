@@ -1,3 +1,6 @@
+const menuOverlay = document.getElementById('menu-overlay');
+const mainContainer = document.querySelector('.main-container');
+const menuButtons = document.querySelectorAll('.menu-choice-btn');
 const multiplierDisplay = document.getElementById('multiplier-display');
 const crashChart = document.getElementById('crash-chart');
 const startButton = document.getElementById('start-button');
@@ -15,6 +18,23 @@ let crashHistory = [];
 
 // Game constants
 const CRASH_PROBABILITY = 0.01; // Base probability of crashing on any given frame
+
+// Menu Logic
+menuButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        // Fade out the menu
+        menuOverlay.style.opacity = '0';
+        setTimeout(() => {
+            menuOverlay.classList.add('hidden');
+        }, 500); // Match timeout to CSS transition
+
+        mainContainer.classList.remove('hidden');
+        document.body.style.overflow = 'auto';
+        
+        // Initialize canvas size now that it's visible
+        resizeCanvas();
+    });
+});
 
 function getCrashPoint() {
     if (Math.random() < 0.03) {
@@ -240,4 +260,5 @@ function resizeCanvas() {
 }
 
 window.addEventListener('resize', resizeCanvas);
-resizeCanvas(); 
+// Do not call resizeCanvas() initially, as the canvas is hidden.
+// resizeCanvas(); 
