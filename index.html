@@ -10,14 +10,25 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header id="site-header">
+    <header id="site-header" class="hidden">
         <div class="logo">
             <span class="logo-main">Zabania</span>
             <span class="logo-sub">Predictor</span>
         </div>
     </header>
 
-    <div id="menu-overlay">
+    <div id="password-overlay">
+        <div id="password-container">
+            <h2>Access Required</h2>
+            <div class="password-input-group">
+                <input type="password" id="password-input" placeholder="Enter Access Code...">
+                <button id="password-submit">Submit</button>
+            </div>
+            <p id="password-error" class="hidden">Incorrect code. Please try again.</p>
+        </div>
+    </div>
+
+    <div id="menu-overlay" class="hidden">
         <div id="menu-container">
             <h1>Select a Platform</h1>
             <div class="menu-choices">
@@ -39,6 +50,20 @@
             <ul id="history-list"></ul>
         </div>
     </div>
+
+    <div id="captcha-overlay" class="hidden">
+        <div id="captcha-container">
+            <h2>Are you a robot?</h2>
+            <p>Please solve the following math problem:</p>
+            <p id="captcha-question"></p>
+            <div class="captcha-input-group">
+                <input type="text" id="captcha-input" placeholder="Your answer...">
+                <button id="captcha-submit">Submit</button>
+            </div>
+            <p id="captcha-error" class="hidden">Incorrect answer. Please try again.</p>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html> 
