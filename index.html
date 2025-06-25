@@ -15,6 +15,7 @@
             <span class="logo-main">Zabania</span>
             <span class="logo-sub">Predictor</span>
         </div>
+        <button id="return-to-menu-btn" class="hidden">Return to Menu</button>
     </header>
 
     <div id="password-overlay">
@@ -28,13 +29,24 @@
         </div>
     </div>
 
-    <div id="menu-overlay" class="hidden">
-        <div id="menu-container">
+    <div id="platform-overlay" class="hidden">
+        <div id="platform-container">
             <h1>Select a Platform</h1>
-            <div class="menu-choices">
-                <button class="menu-choice-btn">1xBet</button>
-                <button class="menu-choice-btn">Betwinner</button>
-                <button class="menu-choice-btn">Linabet</button>
+            <div class="platform-choices">
+                <button class="platform-choice-btn">1xBet</button>
+                <button class="platform-choice-btn">Betwinner</button>
+                <button class="platform-choice-btn">Linabet</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-choice-overlay" class="hidden">
+        <div id="game-choice-container">
+            <h1>Select a Game</h1>
+            <div class="game-choices">
+                <button id="start-crash-btn" class="game-choice-btn">Crash Game</button>
+                <button id="start-aof-btn" class="game-choice-btn">Apple of Fortune</button>
+                <button id="start-thimbles-btn" class="game-choice-btn">Thimbles</button>
             </div>
         </div>
     </div>
@@ -61,6 +73,46 @@
                 <button id="captcha-submit">Submit</button>
             </div>
             <p id="captcha-error" class="hidden">Incorrect answer. Please try again.</p>
+        </div>
+    </div>
+
+    <div id="aof-overlay" class="hidden">
+        <div id="aof-container">
+            <h2>Apple of Fortune Predictor</h2>
+            <p>The bot will attempt to find a winning path.</p>
+            <div id="aof-grid"></div>
+            <p id="aof-status">Bot is ready. Good luck!</p>
+            <button id="aof-start-btn">Start Bot</button>
+        </div>
+    </div>
+
+    <div id="thimbles-overlay" class="hidden">
+        <div id="thimbles-container">
+            <h2>Thimbles Predictor</h2>
+            <div id="thimbles-controls">
+                <p>Select Mode:</p>
+                <div class="segmented-control">
+                    <div class="segmented-control-bg"></div>
+                    <button id="thimbles-1ball-btn" class="thimbles-mode-btn active">1 Ball</button>
+                    <button id="thimbles-2ball-btn" class="thimbles-mode-btn">2 Balls</button>
+                </div>
+            </div>
+            <div id="thimbles-cups">
+                <div class="thimble-cup-container">
+                    <div class="thimble-cup"></div>
+                    <div class="thimble-ball hidden"></div>
+                </div>
+                <div class="thimble-cup-container">
+                    <div class="thimble-cup"></div>
+                    <div class="thimble-ball hidden"></div>
+                </div>
+                <div class="thimble-cup-container">
+                    <div class="thimble-cup"></div>
+                    <div class="thimble-ball hidden"></div>
+                </div>
+            </div>
+            <p id="thimbles-status">Select a mode and press play.</p>
+            <button id="thimbles-play-btn">Play</button>
         </div>
     </div>
 
