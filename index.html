@@ -10,7 +10,25 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="main-container">
+    <header id="site-header">
+        <div class="logo">
+            <span class="logo-main">Zabania</span>
+            <span class="logo-sub">Predictor</span>
+        </div>
+    </header>
+
+    <div id="menu-overlay">
+        <div id="menu-container">
+            <h1>Select a Platform</h1>
+            <div class="menu-choices">
+                <button class="menu-choice-btn">1xBet</button>
+                <button class="menu-choice-btn">Betwinner</button>
+                <button class="menu-choice-btn">Linabet</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container hidden">
         <div id="game-container">
             <div id="multiplier-display">1.00x</div>
             <canvas id="crash-chart"></canvas>
