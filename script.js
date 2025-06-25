@@ -40,9 +40,26 @@ passwordInput.addEventListener('keyup', (e) => {
 
 function checkPassword() {
     if (passwordInput.value === ACCESS_PASSWORD) {
-        passwordOverlay.classList.add('hidden');
+        // Start fade out for password screen
+        passwordOverlay.style.opacity = '0';
+        
+        // After fade out, hide it completely
+        setTimeout(() => {
+            passwordOverlay.classList.add('hidden');
+        }, 500);
+
+        // Make menu visible but transparent initially
         menuOverlay.classList.remove('hidden');
+        menuOverlay.style.opacity = '0';
         siteHeader.classList.remove('hidden');
+        siteHeader.style.opacity = '0';
+
+        // Fade in the menu and header
+        setTimeout(() => {
+            menuOverlay.style.opacity = '1';
+            siteHeader.style.opacity = '1';
+        }, 100); // Short delay to ensure it's rendered before fading in
+
     } else {
         passwordError.classList.remove('hidden');
         passwordInput.value = '';
