@@ -137,9 +137,29 @@ body {
     position: absolute;
     top: 2rem;
     left: 2rem;
-    z-index: 10;
+    right: 2rem;
+    z-index: 260;
     opacity: 1;
     transition: opacity 0.5s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#return-to-menu-btn {
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--bg-tertiary);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+#return-to-menu-btn:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
 }
 
 .logo {
@@ -235,7 +255,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 200;
+    z-index: 300;
     opacity: 1;
     transition: opacity 0.3s ease;
 }
@@ -372,10 +392,359 @@ body {
     height: 1em;
 }
 
+#platform-overlay, #game-choice-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+#platform-container, #game-choice-container {
+    background-color: var(--bg-secondary);
+    padding: 3rem 4rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+#platform-container h1, #game-choice-container h1 {
+    margin-top: 0;
+    font-weight: 600;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.platform-choices, .game-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.platform-choice-btn, .game-choice-btn {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--bg-tertiary);
+    padding: 1rem 3rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.platform-choice-btn:hover, .game-choice-btn:hover {
+    background-color: var(--accent-green);
+    border-color: var(--accent-green-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+}
+
+#aof-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 250;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+#aof-container {
+    background-color: var(--bg-secondary);
+    padding: 2rem 3rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+    width: 500px;
+}
+
+#aof-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 10px;
+    width: 400px;
+    height: 400px;
+    margin: 1.5rem auto;
+    background-color: var(--bg-tertiary);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.aof-cell {
+    background-color: var(--bg-primary);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%234A5568"><path d="M12 2C9.243 2 7 4.243 7 7c0 2.21 1.79 4 4 4h2c2.21 0 4-1.79 4-4s-1.79-5-4-5h-2zm0 10c-2.75 0-5.4.88-7.35 2.5C2.55 16.18 2 18.5 2 21v1h20v-1c0-2.5-0.55-4.82-2.65-6.5C17.4 12.88 14.75 12 12 12z"/></svg>');
+    background-size: 60%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.aof-cell.good {
+    background-color: var(--accent-green);
+    box-shadow: 0 0 15px var(--accent-green);
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M12 2C9.243 2 7 4.243 7 7s1.79 4 4 4h2c2.21 0 4-1.79 4-4s-1.79-5-4-5h-2zm0 10c-2.75 0-5.4.88-7.35 2.5C2.55 16.18 2 18.5 2 21v1h20v-1c0-2.5-0.55-4.82-2.65-6.5C17.4 12.88 14.75 12 12 12z"/></svg>');
+}
+
+.aof-cell.bad {
+    background-color: var(--accent-red);
+    box-shadow: 0 0 15px var(--accent-red);
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M12 2C9.243 2 7 4.243 7 7s1.79 4 4 4h2c2.21 0 4-1.79 4-4s-1.79-5-4-5h-2zm0 10c-2.75 0-5.4.88-7.35 2.5C2.55 16.18 2 18.5 2 21v1h20v-1c0-2.5-0.55-4.82-2.65-6.5C17.4 12.88 14.75 12 12 12z"/></svg>');
+}
+
+.aof-cell.current {
+    transform: scale(1.1);
+    border: 3px solid white;
+}
+
+#aof-status {
+    color: var(--text-secondary);
+    font-weight: 600;
+    min-height: 1.2em;
+}
+
+#aof-start-btn {
+    background-color: var(--accent-green);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.25rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+#aof-start-btn:hover:not(:disabled) {
+    background-color: var(--accent-green-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+#aof-start-btn:disabled {
+    background-color: #a0aec0;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+#thimbles-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 250;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+#thimbles-container {
+    background-color: var(--bg-secondary);
+    padding: 2rem 3rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+    width: 600px;
+}
+
+#thimbles-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+#thimbles-controls p {
+    margin: 0;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.segmented-control {
+    position: relative;
+    display: flex;
+    background-color: var(--bg-primary);
+    border-radius: 8px;
+    padding: 4px;
+    border: 1px solid var(--bg-tertiary);
+}
+
+.segmented-control-bg {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: calc(50% - 4px);
+    height: calc(100% - 8px);
+    background-color: var(--accent-green);
+    border-radius: 6px;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.segmented-control.two-balls .segmented-control-bg {
+    transform: translateX(100%);
+}
+
+.thimbles-mode-btn {
+    background-color: transparent; /* Buttons are transparent */
+    color: var(--text-secondary);
+    border: none; /* Removed border */
+    padding: 0.5rem 1.5rem; /* Increased padding */
+    border-radius: 6px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    z-index: 10; /* Make sure text is above the background */
+    flex: 1; /* Make buttons take up equal space */
+}
+
+.thimbles-mode-btn.active {
+    background-color: transparent; /* Active state does not need a background */
+    color: white;
+    border-color: transparent; /* No border color needed */
+}
+
+#thimbles-cups {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    align-items: center;
+    height: 150px;
+    margin-bottom: 2rem;
+    perspective: 800px;
+}
+
+.thimble-cup-container {
+    position: relative;
+    width: 100px;
+    height: 120px;
+}
+
+.thimble-cup-container.shuffling:nth-child(1) {
+    animation: shuffle-1 2.5s ease-in-out forwards;
+}
+.thimble-cup-container.shuffling:nth-child(2) {
+    animation: shuffle-2 2.5s ease-in-out forwards;
+}
+.thimble-cup-container.shuffling:nth-child(3) {
+    animation: shuffle-3 2.5s ease-in-out forwards;
+}
+
+.thimble-cup {
+    width: 100px;
+    height: 80px;
+    background-color: #c0392b;
+    border-radius: 50% 50% 0 0;
+    position: absolute;
+    bottom: 0;
+    cursor: pointer;
+    transition: transform 0.4s ease-in-out;
+    box-shadow: inset 0 -10px 0 rgba(0,0,0,0.2);
+}
+
+.thimble-cup.up {
+    transform: translateY(-90px);
+}
+
+.thimble-cup.chosen {
+    border: 4px solid var(--accent-green);
+}
+
+.thimble-ball {
+    width: 30px;
+    height: 30px;
+    background-color: var(--accent-green);
+    border-radius: 50%;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 10px var(--accent-green);
+    transition: opacity 0.3s ease;
+}
+
+#thimbles-status {
+    color: var(--text-secondary);
+    font-weight: 600;
+    min-height: 1.2em;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+
+#thimbles-play-btn {
+    background-color: var(--accent-green);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.25rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+#thimbles-play-btn:hover:not(:disabled) {
+    background-color: var(--accent-green-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+#thimbles-play-btn:disabled {
+    background-color: #a0aec0;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
 #password-overlay.hidden,
 #menu-overlay.hidden,
-#captcha-overlay.hidden {
+#captcha-overlay.hidden,
+#aof-overlay.hidden {
     opacity: 0;
     pointer-events: none;
     /* The .hidden class will take care of display: none */
+}
+
+@keyframes shuffle-1 {
+  0%   { transform: translate(0, 0); z-index: 10; }
+  20%  { transform: translate(140px, -40px); }
+  40%  { transform: translate(280px, 0); z-index: 5; }
+  60%  { transform: translate(140px, 40px); }
+  80%  { transform: translate(0, -40px); z-index: 10; }
+  100% { transform: translate(0, 0); z-index: 10; }
+}
+@keyframes shuffle-2 {
+  0%   { transform: translate(0, 0); z-index: 5; }
+  20%  { transform: translate(-140px, 40px); }
+  40%  { transform: translate(0, -40px); z-index: 10; }
+  60%  { transform: translate(140px, 0); }
+  80%  { transform: translate(0, 40px); z-index: 5; }
+  100% { transform: translate(0, 0); z-index: 5; }
+}
+@keyframes shuffle-3 {
+  0%   { transform: translate(0, 0); z-index: 10; }
+  20%  { transform: translate(-140px, 0); }
+  40%  { transform: translate(-280px, 40px); z-index: 5;}
+  60%  { transform: translate(-140px, -40px); }
+  80%  { transform: translate(0, 0); z-index: 10; }
+  100% { transform: translate(0, 0); z-index: 10; }
 } 
