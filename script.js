@@ -5,7 +5,17 @@ const multiplierDisplay = document.getElementById('multiplier-display');
 const crashChart = document.getElementById('crash-chart');
 const startButton = document.getElementById('start-button');
 const historyList = document.getElementById('history-list');
+const captchaOverlay = document.getElementById('captcha-overlay');
+const captchaQuestion = document.getElementById('captcha-question');
+const captchaInput = document.getElementById('captcha-input');
+const captchaSubmit = document.getElementById('captcha-submit');
+const captchaError = document.getElementById('captcha-error');
 const ctx = crashChart.getContext('2d');
+const siteHeader = document.getElementById('site-header');
+const passwordOverlay = document.getElementById('password-overlay');
+const passwordInput = document.getElementById('password-input');
+const passwordSubmit = document.getElementById('password-submit');
+const passwordError = document.getElementById('password-error');
 
 let multiplier = 1;
 let startTime;
@@ -15,9 +25,30 @@ let crashPointValue = 0;
 let crashAnimationTime = 0;
 let historicalMultipliers = [];
 let crashHistory = [];
+let roundCounter = 0;
+let captchaAnswer = 0;
+const ACCESS_PASSWORD = "salma molat tarma";
 
 // Game constants
 const CRASH_PROBABILITY = 0.01; // Base probability of crashing on any given frame
+
+// Password Logic
+passwordSubmit.addEventListener('click', checkPassword);
+passwordInput.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') checkPassword();
+});
+
+function checkPassword() {
+    if (passwordInput.value === ACCESS_PASSWORD) {
+        passwordOverlay.classList.add('hidden');
+        menuOverlay.classList.remove('hidden');
+        siteHeader.classList.remove('hidden');
+    } else {
+        passwordError.classList.remove('hidden');
+        passwordInput.value = '';
+        passwordInput.focus();
+    }
+}
 
 // Menu Logic
 menuButtons.forEach(button => {
@@ -36,15 +67,47 @@ menuButtons.forEach(button => {
     });
 });
 
+// Captcha Logic
+captchaSubmit.addEventListener('click', solveCaptcha);
+captchaInput.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') {
+        solveCaptcha();
+    }
+});
+
+function showCaptcha() {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    captchaAnswer = num1 + num2;
+
+    captchaQuestion.textContent = `${num1} + ${num2} = ?`;
+    captchaInput.value = '';
+    captchaError.classList.add('hidden');
+    captchaOverlay.classList.remove('hidden');
+    captchaInput.focus();
+}
+
+function solveCaptcha() {
+    const userAnswer = parseInt(captchaInput.value);
+    if (userAnswer === captchaAnswer) {
+        captchaOverlay.classList.add('hidden');
+        startButton.disabled = false;
+        startButton.textContent = 'Play Again';
+    } else {
+        captchaError.classList.remove('hidden');
+        captchaInput.value = '';
+        captchaInput.focus();
+    }
+}
+
 function getCrashPoint() {
-    if (Math.random() < 0.03) {
+    if (Math.random() < 0.015) {
         return 1.00;
     }
     const r = Math.random();
-    const multiplier = 0.99 / (1 - r);
+    const multiplier = 0.993 / (1 - r);
     return Math.max(1, Math.floor(multiplier * 100) / 100);
 }
-
 
 function startGame() {
     crashed = false;
@@ -67,8 +130,13 @@ function startGame() {
             drawChart();
             drawCrashExplosion();
             if (crashAnimationTime === 0) {
-                startButton.disabled = false;
-                startButton.textContent = 'Play Again';
+                if (roundCounter % 3 === 0) {
+                    showCaptcha();
+                } else {
+                    startButton.disabled = false;
+                    startButton.textContent = 'Play Again';
+                }
+                return; // End animation loop
             }
             requestAnimationFrame(gameLoop);
             return;
@@ -81,6 +149,7 @@ function startGame() {
 
         if (multiplier >= crashPoint) {
             crashed = true;
+            roundCounter++;
             crashAnimationTime = 60; // 60 frames for animation
             const finalMultiplier = crashPoint;
             multiplierDisplay.textContent = `Crashed @ ${finalMultiplier.toFixed(2)}x`;
@@ -248,7 +317,6 @@ function drawGrid() {
         ctx.fillText(`${time.toFixed(1)}s`, x + 5, height - 5);
     }
 }
-
 
 startButton.addEventListener('click', startGame);
 
